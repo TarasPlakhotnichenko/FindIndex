@@ -1,0 +1,59 @@
+#!/usr/bin/perl -w
+use strict;
+use FindIndex;
+
+
+#my $cl = FindIndex->new();
+#print "Name:               ".$cl->{name}."\n";
+
+my @ar = (1, 2, 5, 7, 12, 15, 50, 51, 52, 57, 77);
+
+
+sub get_value {
+my($mywant) = shift;
+my(@arr) = @_;
+
+
+#
+#For not very big dimentions:
+#my %index;
+#@index{@arr2} = (0..$#arr2);
+#my $index = $index{15};
+#
+	
+if ( grep( /^$mywant$/, @arr ) ) 
+{ #if found return index right away
+my $index = 0;
+++$index until $arr[$index] == $mywant or $index > $#arr;
+return $index;
+}
+else
+{
+ my $index = 0;
+ foreach my $i (0 .. $#arr) {
+ 
+  #defining what element is closer to our want---------vvvvv
+  if (($arr[$i] < $mywant) and ($arr[$i+1] > $mywant))
+  {
+   if (($arr[$i+1] - $mywant) > ($mywant - $arr[$i]))
+   {
+   #print "$arr[$i]\n";
+   return $i;
+   }
+   else
+   {
+   #print "$arr[$i+1]\n";
+   return $i+1;
+   }
+  }
+ 
+  #defining what element is closer to our want---------^^^^^
+  
+  } 
+}
+
+};
+
+print get_value(49, @ar);
+
+
